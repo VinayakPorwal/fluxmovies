@@ -1,9 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -77,6 +78,21 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "Poppins", sans-serif;
+  /* font-family: var(--font-mono) !important; */
+  color: white !important;
+}
+.fontWhite {
+  color: white !important;
+}
+.fontBlack {
+  color: black !important;
+}
+.bgWhite {
+  background-color: white !important;
+}
+.bgBlack {
+  background-color: black !important;
 }
 
 html,
@@ -92,7 +108,7 @@ body {
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
+    rgb(var(--background-start-rgb)) !important;
 }
 
 a {

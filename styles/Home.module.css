@@ -1,12 +1,17 @@
-.main {
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.mmain {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  padding: 0 2rem;
+  min-height: 79vh;
+  margin: 2.2rem 0;
 }
 
+.font {
+  font-family: "Poppins", sans-serif;
+}
 .description {
   display: inherit;
   justify-content: inherit;
@@ -72,7 +77,20 @@
   max-width: 30ch;
 }
 
-.center {
+.greet {
+  display: inline-block;
+}
+.cardp {
+  margin: 20px 0;
+  opacity: 1;
+  font-size: 1.1rem;
+  color: aliceblue;
+  line-height: 1.5;
+  text-align: center;
+  text-shadow: 1px 2px black;
+  max-width: 30ch;
+}
+.ccenter {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,7 +98,7 @@
   padding: 4rem 0;
 }
 
-.center::before {
+.ccenter::before {
   background: var(--secondary-glow);
   border-radius: 50%;
   width: 480px;
@@ -88,16 +106,16 @@
   margin-left: -400px;
 }
 
-.center::after {
+.ccenter::after {
   background: var(--primary-glow);
   width: 240px;
   height: 180px;
   z-index: -1;
 }
 
-.center::before,
-.center::after {
-  content: '';
+.ccenter::before,
+.ccenter::after {
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);
@@ -113,10 +131,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 75px;
-  height: 75px;
-  padding: 25px 10px;
+  /* width: 75px; */
+  /* height: 75px; */
+  padding: 15px 10px;
+  /* filter: none !important; */
   margin-left: 16px;
+  margin: 10px;
   transform: translateZ(0);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -125,7 +145,7 @@
 
 .thirteen::before,
 .thirteen::after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: -1;
 }
@@ -143,12 +163,21 @@
   inset: 0;
   padding: 1px;
   border-radius: var(--border-radius);
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom right,
     rgba(var(--tile-start-rgb), 1),
     rgba(var(--tile-end-rgb), 1)
-  );
+  ); */
+  background: black;
   background-clip: content-box;
+}
+.typewriter {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: 0.15em solid rgb(0, 34, 255); /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: 0.15em; /* Adjust as needed */
+  animation: typing 3s steps(40, end) 1, blink-caret 0.75s step-end 2s infinite;
 }
 
 /* Enable hover only on non-touch devices */
@@ -274,5 +303,26 @@
   }
   to {
     transform: rotate(0deg);
+  }
+}
+
+/* The typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: rgb(51, 0, 255);
   }
 }

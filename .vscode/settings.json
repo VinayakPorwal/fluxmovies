@@ -1,0 +1,9 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Atom One Dark",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
+  }
+}
