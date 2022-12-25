@@ -37,7 +37,7 @@ function About(props) {
     })
       .then((response) => response.json())
       .then((d) => {
-        console.log(d);
+        // console.log(d);
         if (d["Response"] == "False") {
           Eror.style.display = "Block";
           setErorCode("Error 404! No match Found.");
@@ -46,11 +46,11 @@ function About(props) {
           );
           setData([]);
         } else {
-          // displaycard.style.display = "block";
-          // setCheck(true);
-          // setData(d["Search"]);
+          displaycard.style.display = "block";
+          setCheck(true);
+          setData(d["Search"]);
 
-          console.log(d);
+          // console.log(d);
         }
         loading.style.display = "None";
       });
