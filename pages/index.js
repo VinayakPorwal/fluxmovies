@@ -123,7 +123,7 @@ export default function Home(props) {
           Some Movies You might like Are here, Scroll Down below!
         </p>
       </main>
-      <Crousel src={src} movies={featured} />
+      {/* <Crousel src={src} movies={featured} /> */}
 
       <Card.Header
         as="h5"
