@@ -1,5 +1,3 @@
-import Router, { useRouter } from "next/router";
-import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Placeholder from "react-bootstrap/Placeholder";
@@ -7,48 +5,12 @@ import img from "../../public/thirteen.svg";
 import Image from "next/image";
 import stylis from "../../styles/Home.module.css";
 
-function movies() {
-  const key = "2d4765cd";
-  const router = useRouter();
-
-  const [data, setData] = useState([]);
-
-  const [src, setSrc] = useState();
-  const { query, isReady } = useRouter();
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    // codes using router.query
-    // router.query.movies;
-    api(router.query.movies);
-    return;
-  }, [router.isReady]);
-
-  async function api(abc) {
-    console.log(abc);
-    loading.style.display = "flex";
-    displaycard.style.display = "None";
-    // if (abc != null) {
-    await fetch(`http://www.omdbapi.com/?apikey=${key}&i=${abc}&plot=full`)
-      .then((response) => response.json())
-      .then((d) => {
-        if (d["Response"] == "False") setData([]);
-        else {
-          loading.style.display = "None";
-          displaycard.style.display = "block";
-          setSrc(d["Poster"]);
-          setData(d);
-          console.log(d);
-        }
-      });
-    // }
-  }
-  //   const ratings = data["Ratings"];
-  //   console.log(ratings[0]);
-
+function movies(props) {
+  const data = props.data;
+  const src = props.data["Poster"];
   return (
     <>
-      <div id="displaycard" style={{ display: "none" }}>
+      <div id="displaycard" style={{}}>
         <Card
           style={{
             width: "80vw",
@@ -102,11 +64,14 @@ function movies() {
           <Card.Text style={{ padding: "1rem" }}>{data["Plot"]}</Card.Text>
         </Card>
       </div>
+
+      {/* Skeleton loading  */}
       <Card
         style={{
           width: "60vw",
           margin: "Auto",
-          display: "flex",
+          // display: "flex", //remove Comment to see skeleton loading
+          display: "none",
           flexDirection: "row",
         }}
         className="bgBlack"
@@ -135,6 +100,18 @@ function movies() {
       </Card>
     </>
   );
+}
+export async function getServerSideProps(context) {
+  const key = "2d4765cd";
+  var abc = context.query.movies;
+  const res = await fetch(
+    `http://www.omdbapi.com/?apikey=${key}&i=${abc}&ploot=full`
+  );
+  var data = await res.json();
+
+  return {
+    props: { data }, // will be passed to the page component as props
+  };
 }
 
 export default movies;
