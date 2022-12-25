@@ -47,3 +47,8 @@
 // }
 
 // export default Crousel;
+function Crousel() {
+  return <div>Enter</div>;
+}
+
+export default Crousel;

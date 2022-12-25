@@ -19,6 +19,7 @@
     "bootstrap": "^5.2.3",
     "eslint": "8.30.0",
     "eslint-config-next": "13.0.7",
+    "gh-pages": "^4.0.0",
     "next": "^13.0.7",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
