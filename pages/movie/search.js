@@ -30,7 +30,9 @@ function About(props) {
     console.log(movie);
     Eror.style.display = "none";
 
-    await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${movie}`)
+    await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${movie}`, {
+      mode: "no-cors",
+    })
       .then((response) => response.json())
       .then((d) => {
         if (d["Response"] == "False") {
