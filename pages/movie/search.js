@@ -69,6 +69,7 @@ function About(props) {
         "Invalid combination of letters Searched , Such as Empty characters!."
       );
       setErorCode("Error 422 ! Unsupported Entry");
+      Eror.style.display = "block";
     } else {
       api();
     }
@@ -84,6 +85,7 @@ function About(props) {
           "Invalid combination of letters Searched , Such as Empty characters!."
         );
         setErorCode("Error 422 ! Unsupported Entry");
+        Eror.style.display = "block";
       } else {
         api();
       }
@@ -117,6 +119,25 @@ function About(props) {
           Search
         </Button>
       </InputGroup>
+      {/* Error box */}
+      <Alert
+        id="Eror"
+        variant="danger"
+        onClose={() => (Eror.style.display = "none")}
+        dismissible
+        style={{
+          width: "75vw",
+          margin: "auto",
+          backgroundColor: "#a9414b",
+          display: "none",
+        }}
+        className="thirteen"
+      >
+        <Alert.Heading>{erorCode}</Alert.Heading>
+        <p>{erorValue}</p>
+      </Alert>
+
+      {/* Movie List  */}
       <div id="displaycard">
         {check ? (
           data.slice(0, 6).map((m, i) => (
@@ -194,24 +215,6 @@ function About(props) {
           <Placeholder.Button variant="primary" xs={2} />
         </Card.Body>
       </Card>
-
-      {/* Error box */}
-      <Alert
-        id="Eror"
-        variant="danger"
-        onClose={() => (Eror.style.display = "none")}
-        dismissible
-        style={{
-          width: "75vw",
-          margin: "auto",
-          backgroundColor: "#a9414b",
-          display: "none",
-        }}
-        className="thirteen"
-      >
-        <Alert.Heading>{erorCode}</Alert.Heading>
-        <p>{erorValue}</p>
-      </Alert>
     </>
   );
 }
