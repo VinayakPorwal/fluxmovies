@@ -169,7 +169,10 @@ export async function getServerSideProps(context) {
   const movieName = "dhoom";
   const key = "2d4765cd";
   const res = await fetch(
-    `http://www.omdbapi.com/?apikey=${key}&s=${movieName}`
+    `http://www.omdbapi.com/?apikey=${key}&s=${movieName}`,
+    {
+      mode: "no-cors",
+    }
   );
   var data = await res.json();
   // console.log(data["Search"]);
