@@ -108,7 +108,6 @@ export default function Home(props) {
 
         <div
           className={`${styles.font} ${styles.ccenter}`}
-          // onClick={() => Router.push("/posts/about")}
           style={{ display: "flex", flexDirection: "column" }}
         >
           <h2 className={styles.greet}>Welcome to</h2>
@@ -135,10 +134,7 @@ export default function Home(props) {
         className={`${styles.thirteen} bgBlack`}
         style={{ width: "80vw", alignItems: "center", margin: "auto" }}
       >
-        <div
-          className={`${styles.grid} `}
-          // style={{ border: "1px solid white" }}
-        >
+        <div className={`${styles.grid} `}>
           {featured.map((m, i) => (
             <Card.Body style={{ textAlign: "center" }} key={i}>
               <img
@@ -182,5 +178,3 @@ export async function getServerSideProps(context) {
     props: { data }, // will be passed to the page component as props
   };
 }
-
-// ALL FILES CODE REFORM , RESTRUCTURE , REDUCE
