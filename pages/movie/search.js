@@ -30,11 +30,14 @@ function About(props) {
     console.log(movie);
     Eror.style.display = "none";
 
-    await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${movie}`, {
-      mode: "no-cors",
+    await fetch(`https://www.omdbapi.com/?apikey=${key}&s=${movie}`, {
+      // mode: "no-cors",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
     })
       .then((response) => response.json())
       .then((d) => {
+        console.log(d);
         if (d["Response"] == "False") {
           Eror.style.display = "Block";
           setErorCode("Error 404! No match Found.");
@@ -43,11 +46,11 @@ function About(props) {
           );
           setData([]);
         } else {
-          displaycard.style.display = "block";
-          setCheck(true);
-          setData(d["Search"]);
+          // displaycard.style.display = "block";
+          // setCheck(true);
+          // setData(d["Search"]);
 
-          console.log(data);
+          console.log(d);
         }
         loading.style.display = "None";
       });
