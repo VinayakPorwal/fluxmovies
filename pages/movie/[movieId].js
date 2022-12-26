@@ -71,13 +71,14 @@ function Movies(props) {
                 var favs = JSON.parse(localStorage.getItem("favs"));
 
                 if (favs) {
-                  var newArr = [
-                    ...new Map(
-                      favs.map((item) => [item[imbdid], item])
-                    ).values(),
-                  ];
+                  var newArr = favs.filter((data) => {
+                    return data.imdb !== imbdid;
+                  });
                   // console.log(favs, newArr);
-                  if (favs.length === newArr.length) {
+                  if (favs.length !== newArr.length) {
+                    setValue("Already Exists");
+                    return;
+                  } else {
                     favs.push({
                       title: valueid,
                       imdb: imbdid,
@@ -90,7 +91,6 @@ function Movies(props) {
                   }
                   // favs[keyid] = valueid;
                 } else {
-                  if (favs.length === newArr.length) return;
                   favs = [];
                   favs.push({
                     title: valueid,
