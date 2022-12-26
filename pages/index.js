@@ -134,7 +134,13 @@ export default function Home(props) {
         className={`${styles.thirteen} bgBlack`}
         style={{ width: "80vw", alignItems: "center", margin: "auto" }}
       >
-        <div className={`${styles.grid} `}>
+        <div
+          className={`${styles.grid} ${styles.scrolbar}`}
+          style={{
+            height: "85vh",
+            overflowY: "scroll",
+          }}
+        >
           {featured.map((m, i) => (
             <Card.Body style={{ textAlign: "center" }} key={i}>
               <img
@@ -178,3 +184,6 @@ export async function getServerSideProps(context) {
     props: { data }, // will be passed to the page component as props
   };
 }
+
+// local storage in browser
+// add to fav feature

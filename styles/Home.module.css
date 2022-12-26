@@ -326,3 +326,7 @@
     border-color: rgb(51, 0, 255);
   }
 }
+
+.scrolbar::-webkit-scrollbar {
+  width: 0px;
+}
