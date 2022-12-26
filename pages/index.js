@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Crousel from "./components/crousal";
@@ -94,6 +94,44 @@ export default function Home(props) {
       imdbID: "tt1562871",
     },
   ]);
+  const [favoriteData, setFavoriteData] = useState([]);
+  const [check, setCheck] = useState(false);
+
+  if (typeof window !== "undefined") {
+    console.log("we are running on the client");
+  } else {
+    console.log("we are running on the server");
+  }
+  const favdata = () => {
+    var getdata = JSON.parse(localStorage.getItem("favs"));
+
+    // var item = (DynamicData.innerHTML = item);
+    if (getdata) {
+      // getdata = [];
+      setFavoriteData(getdata);
+      console.log(favoriteData);
+      DynamicFavData.style.display = "block";
+      setCheck(true);
+      document
+        .getElementById("scrolltofav")
+        .scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  // useEffect(() => {
+  //   // console.log(JSON.parse(localStorage.getItem("favs")));
+  //   // setFavorites(JSON.parse(localStorage.getItem("favs")));
+  //   var favorite = JSON.parse(localStorage.getItem("favs"));
+  //   console.log(favorite);
+  // }, []);
+  function xx() {
+    return favoriteData.map((obj) => {
+      <Card.Title key={obj.id}>
+        {obj.title}
+        {obj.imdb}
+      </Card.Title>;
+    });
+  }
+
   return (
     <>
       <Head>
@@ -117,6 +155,15 @@ export default function Home(props) {
           >
             <h2 className={styles.typewriter}>FLUXMOVIES</h2>
           </div>
+          <Button
+            variant="primary"
+            onClick={favdata}
+            style={{
+              zIndex: "4",
+            }}
+          >
+            Go to Favorites
+          </Button>
         </div>
         <p className={styles.cardp}>
           Some Movies You might like Are here, Scroll Down below!
@@ -131,14 +178,15 @@ export default function Home(props) {
         Featured
       </Card.Header>
       <Card
-        className={`${styles.thirteen} bgBlack`}
+        className={`${styles.thirteen} bgBlack mb-3`}
         style={{ width: "80vw", alignItems: "center", margin: "auto" }}
       >
         <div
           className={`${styles.grid} ${styles.scrolbar}`}
           style={{
-            height: "85vh",
-            overflowY: "scroll",
+            overflowX: "scroll",
+            width: "fit-content",
+            display: "flex",
           }}
         >
           {featured.map((m, i) => (
@@ -149,10 +197,12 @@ export default function Home(props) {
                 style={{
                   height: "25vh",
                   filter: "none",
+                  cursor: "pointer",
+                  marginBottom: "2px",
                 }}
               />
-              <Card.Title>{m.Title}</Card.Title>
-              <Card.Text>{m.Type}</Card.Text>
+              <Card.Title className={styles.movieName}>{m.Title}</Card.Title>
+              <Card.Text className={styles.type}>{m.Type}</Card.Text>
               {/* <Card.Text>{m.Year}</Card.Text> */}
               <Button
                 variant="primary"
@@ -163,6 +213,91 @@ export default function Home(props) {
             </Card.Body>
           ))}
         </div>
+      </Card>
+
+      {/* Favorites */}
+      <div id="DynamicFavData" style={{ display: "none" }}>
+        <Card.Header
+          as="h5"
+          style={{ width: "80vw", alignItems: "center", margin: "1rem auto" }}
+          id="scrolltofav"
+        >
+          {favoriteData.length} Favorites
+        </Card.Header>
+
+        <Card
+          className={`${styles.thirteen} bgBlack mb-3`}
+          id="favorites"
+          style={{ width: "80vw", alignItems: "center", margin: "auto" }}
+        >
+          <div
+            className={`${styles.grid} ${styles.scrolbar}`}
+            style={{
+              overflowX: "scroll",
+              width: "fit-content",
+              display: "flex",
+            }}
+          >
+            {check &&
+              favoriteData.map((obj) => (
+                <Card.Body style={{ textAlign: "center" }} key={obj.imdb}>
+                  <img
+                    src={obj.poster}
+                    alt="movie"
+                    style={{
+                      height: "25vh",
+                      filter: "none",
+                      cursor: "pointer",
+                      marginBottom: "2px",
+                    }}
+                    onClick={() => Router.push("movie/" + obj.imdb)}
+                  />
+                  <Card.Title className={styles.movieName}>
+                    {obj.title}
+                  </Card.Title>
+                  {/* <Card.Text>{m.Year}</Card.Text> */}
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      var objId = obj.imdb;
+                      const removeItem = favoriteData.filter((data) => {
+                        return data.imdb !== objId;
+                      });
+                      setFavoriteData(removeItem);
+                      console.log("remove", removeItem);
+                      localStorage.setItem("favs", JSON.stringify(removeItem));
+                      console.log(
+                        "update",
+                        JSON.parse(localStorage.getItem("favs"))
+                      );
+                    }}
+                  >
+                    Remove
+                  </Button>
+                </Card.Body>
+              ))}
+          </div>
+        </Card>
+      </div>
+
+      <Card
+        className={` ${styles.center} text-center`}
+        style={{
+          background: "transparent",
+          padding: "0",
+          borderTop: "1px solid grey",
+          margin: "0",
+        }}
+      >
+        <Card.Body>
+          <Card.Title>Thanks for Visiting!</Card.Title>
+          <Card.Text>
+            If you found any bug or error,Kindly share with Developer via given
+            Link.
+          </Card.Text>
+          <Button variant="info">Review</Button>
+        </Card.Body>
+        <Card.Footer className="text-muted">Copyright @2023</Card.Footer>
       </Card>
     </>
   );
@@ -179,6 +314,8 @@ export async function getServerSideProps(context) {
   var data = await res.json();
   // console.log(data["Search"]);
   data = data["Search"];
+  // const favs = JSON.parse(window.localStorage.getItem("favs"));
+  // const favs = [];
 
   return {
     props: { data }, // will be passed to the page component as props

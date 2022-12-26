@@ -124,7 +124,7 @@ a {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 1px;
+  width: 0px;
 }
 
 /* Track */
@@ -134,7 +134,8 @@ a {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #f1f1f1;
+  background: #000;
+  /* change this to white or #111 to see the sideScrollBar*/
 }
 
 /* Handle on hover */

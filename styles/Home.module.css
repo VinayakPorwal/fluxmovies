@@ -330,3 +330,19 @@
 .scrolbar::-webkit-scrollbar {
   width: 0px;
 }
+
+.type {
+  opacity: 0.6;
+  margin: 3px;
+  padding: 2px 0px 2px;
+}
+.movieName {
+  width: 15vw;
+  min-width: 8rem;
+  font-size: 1rem;
+  height: 6vh;
+  padding: 6px 0px;
+  margin: 0px;
+  display: grid;
+  align-content: center;
+}

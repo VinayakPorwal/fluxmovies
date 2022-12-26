@@ -4,11 +4,14 @@ import Card from "react-bootstrap/Card";
 import Placeholder from "react-bootstrap/Placeholder";
 import img from "../../public/thirteen.svg";
 import Image from "next/image";
-import stylis from "../../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
+import { useState } from "react";
 
-function movies(props) {
+function Movies(props) {
   const data = props.data;
   const src = props.data["Poster"];
+  const [variant, setVariant] = useState("primary");
+  const [value, setValue] = useState("Add to fav");
   return (
     <>
       <Head>
@@ -27,13 +30,14 @@ function movies(props) {
           }}
           className="bgBlack"
         >
-          <div className={stylis.thirteen}>
+          <div className={styles.thirteen}>
             <Image
               // to Understand the concept behind loader function read this Image Optimization article from next js Documentation
               // https://nextjs.org/docs/basic-features/image-optimization
               loader={({ src }) => {
                 return data["Poster"];
               }}
+              priority="false"
               src={src}
               width={300}
               height={400}
@@ -51,13 +55,58 @@ function movies(props) {
             <Card.Title>{data["Title"]}</Card.Title>
             <Card.Text>{data["Actors"]}</Card.Text>
             <Card.Text>{data["Type"]}</Card.Text>
+            <Card.Text>{data["Year"]}</Card.Text>
             <Card.Text>Director: {data["Director"]}</Card.Text>
             <Card.Text>Writer: {data["Writer"]}</Card.Text>
             <Card.Text>Duration: {data["Runtime"]}</Card.Text>
             <Card.Text>Language: {data["Language"]}</Card.Text>
             <Card.Text> IMDb ratings: {data["imdbRating"]}/10</Card.Text>
             <Card.Text>Collection: {data["BoxOffice"]}</Card.Text>
-            <Button variant="primary">{data["Year"]}</Button>
+            <Button
+              variant={variant}
+              onClick={() => {
+                var imbdid = data["imdbID"];
+                var valueid = data["Title"];
+                var posterurl = data["Poster"];
+                var favs = JSON.parse(localStorage.getItem("favs"));
+
+                if (favs) {
+                  var newArr = [
+                    ...new Map(
+                      favs.map((item) => [item[imbdid], item])
+                    ).values(),
+                  ];
+                  // console.log(favs, newArr);
+                  if (favs.length !== newArr.length) {
+                    setValue("Already Exists in Favorites");
+                    return;
+                  }
+                  // favs[keyid] = valueid;
+                  favs.push({
+                    title: valueid,
+                    imdb: imbdid,
+                    poster: posterurl,
+                  });
+
+                  localStorage.setItem("favs", JSON.stringify(favs));
+                } else {
+                  if (favs.length === newArr.length) return;
+                  favs = [];
+                  favs.push({
+                    title: valueid,
+                    imdb: imbdid,
+                    poster: posterurl,
+                  });
+                  localStorage.setItem("favs", JSON.stringify(favs));
+                  console.log("Key not found");
+                }
+                added.style.display = "block";
+                setValue("Added");
+                setVariant("success");
+              }}
+            >
+              {value}
+            </Button>
           </Card.Body>
         </Card>
         <Card
@@ -110,7 +159,7 @@ function movies(props) {
 }
 export async function getServerSideProps(context) {
   const key = "2d4765cd";
-  var abc = context.query.movies;
+  var abc = context.query.movieId;
   const res = await fetch(
     `http://www.omdbapi.com/?apikey=${key}&i=${abc}&ploot=full`
   );
@@ -121,4 +170,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default movies;
+export default Movies;
