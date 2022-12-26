@@ -77,18 +77,18 @@ function Movies(props) {
                     ).values(),
                   ];
                   // console.log(favs, newArr);
-                  if (favs.length !== newArr.length) {
-                    setValue("Already Exists in Favorites");
-                    return;
+                  if (favs.length === newArr.length) {
+                    favs.push({
+                      title: valueid,
+                      imdb: imbdid,
+                      poster: posterurl,
+                    });
+
+                    localStorage.setItem("favs", JSON.stringify(favs));
+                    setValue("Added");
+                    setVariant("success");
                   }
                   // favs[keyid] = valueid;
-                  favs.push({
-                    title: valueid,
-                    imdb: imbdid,
-                    poster: posterurl,
-                  });
-
-                  localStorage.setItem("favs", JSON.stringify(favs));
                 } else {
                   if (favs.length === newArr.length) return;
                   favs = [];
@@ -99,10 +99,9 @@ function Movies(props) {
                   });
                   localStorage.setItem("favs", JSON.stringify(favs));
                   console.log("Key not found");
+                  setValue("Added");
+                  setVariant("success");
                 }
-                added.style.display = "block";
-                setValue("Added");
-                setVariant("success");
               }}
             >
               {value}

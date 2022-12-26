@@ -321,6 +321,3 @@ export async function getServerSideProps(context) {
     props: { data }, // will be passed to the page component as props
   };
 }
-
-// local storage in browser
-// add to fav feature
