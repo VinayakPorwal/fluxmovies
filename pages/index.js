@@ -29,9 +29,9 @@ export default function Home(props) {
         .scrollIntoView({ behavior: "smooth" });
     }
   };
-  useEffect(() => {
-    // favdata();
-  }, []);
+  // useEffect(() => {
+  //   // favdata();
+  // }, []);
 
   return (
     <>

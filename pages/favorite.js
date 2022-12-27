@@ -11,16 +11,14 @@ function FavoriteList(props) {
   } else {
     console.log("we are running on the server");
   }
-  const [src, setSrc] = useState(
-    "https://m.media-amazon.com/images/M/MV5BOTk3MDNhODEtMWYyMC00NmVjLTg3NzgtNjI1MzA4ZmVhMjE2XkEyXkFqcGdeQXVyNTkzNDQ4ODc@._V1_SX300.jpg"
-  );
+
   //   const favdata = props.getdata;
-  const favoriteData = props.favoriteData;
   const check = props.check;
+  console.log(props.favoriteData);
+  const [favoriteData, setFavoriteData] = useState(props.favoriteData);
 
   return (
     <div>
-      {" "}
       {/* Favorites */}
       <div id="DynamicFavData" style={{ display: "none" }}>
         <Card.Header
@@ -28,9 +26,8 @@ function FavoriteList(props) {
           style={{ width: "80vw", alignItems: "center", margin: "1rem auto" }}
           id="scrolltofav"
         >
-          {favoriteData.length} Favorites
+          {check && favoriteData.length} Favorites
         </Card.Header>
-
         <Card
           className={`${styles.thirteen} bgBlack mb-3`}
           id="favorites"
