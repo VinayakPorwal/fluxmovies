@@ -32,6 +32,16 @@ export default function Home(props) {
   // useEffect(() => {
   //   // favdata();
   // }, []);
+  const remove = (obj) => {
+    var objId = obj.imdb;
+    const removeItem = favoriteData.filter((data) => {
+      return data.imdb !== objId;
+    });
+    setFavoriteData(removeItem);
+    console.log("remove", removeItem);
+    localStorage.setItem("favs", JSON.stringify(removeItem));
+    console.log("update", JSON.parse(localStorage.getItem("favs")));
+  };
 
   return (
     <>
@@ -72,7 +82,58 @@ export default function Home(props) {
       </main>
       {/* <Crousel src={src} movies={featured} /> */}
       <FeaturedList />
-      <FavoriteList check={check} favoriteData={favoriteData} />
+
+      {/* <FavoriteList check={check} favoriteData={favoriteData} /> */}
+      {/* Favorites */}
+      <div id="DynamicFavData" style={{ display: "none" }}>
+        <Card.Header
+          as="h5"
+          style={{ width: "80vw", alignItems: "center", margin: "1rem auto" }}
+          id="scrolltofav"
+        >
+          {check && favoriteData.length} Favorites
+        </Card.Header>
+        <Card
+          className={`${styles.thirteen} bgBlack mb-3`}
+          id="favorites"
+          style={{ width: "80vw", alignItems: "center", margin: "auto" }}
+        >
+          <div
+            className={`${styles.grid} ${styles.scrolbar}`}
+            style={{
+              overflowX: "scroll",
+              width: "fit-content",
+              display: "flex",
+            }}
+          >
+            {check &&
+              favoriteData.map((obj) => (
+                <Card.Body style={{ textAlign: "center" }} key={obj.imdb}>
+                  <Image
+                    alt="movie"
+                    loader={() => {
+                      return obj.poster;
+                    }}
+                    src={obj.poster}
+                    priority
+                    //   src={src}
+                    width={120}
+                    height={400}
+                    className={styles.image}
+                    onClick={() => Router.push("movie/" + obj.imdb)}
+                  />
+                  <Card.Title className={styles.movieName}>
+                    {obj.title}
+                  </Card.Title>
+                  {/* <Card.Text>{m.Year}</Card.Text> */}
+                  <Button variant="secondary" onClick={() => remove(obj)}>
+                    Remove
+                  </Button>
+                </Card.Body>
+              ))}
+          </div>
+        </Card>
+      </div>
       {/* Footer */}
       <Card
         className={` ${styles.center} text-center`}
