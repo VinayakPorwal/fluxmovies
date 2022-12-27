@@ -27,6 +27,7 @@ function Movies(props) {
             display: "flex",
             margin: "Auto",
             flexDirection: "row",
+            flexWrap: "wrap",
           }}
           className="bgBlack"
         >
@@ -52,17 +53,8 @@ function Movies(props) {
           </div>
 
           <Card.Body>
-            <Card.Title>{data["Title"]}</Card.Title>
-            <Card.Text>{data["Actors"]}</Card.Text>
-            <Card.Text>{data["Type"]}</Card.Text>
-            <Card.Text>{data["Year"]}</Card.Text>
-            <Card.Text>Director: {data["Director"]}</Card.Text>
-            <Card.Text>Writer: {data["Writer"]}</Card.Text>
-            <Card.Text>Duration: {data["Runtime"]}</Card.Text>
-            <Card.Text>Language: {data["Language"]}</Card.Text>
-            <Card.Text> IMDb ratings: {data["imdbRating"]}/10</Card.Text>
-            <Card.Text>Collection: {data["BoxOffice"]}</Card.Text>
             <Button
+              style={{ margin: "10px 2px" }}
               variant={variant}
               onClick={() => {
                 var imbdid = data["imdbID"];
@@ -106,6 +98,17 @@ function Movies(props) {
             >
               {value}
             </Button>
+
+            <Card.Title>{data["Title"]}</Card.Title>
+            <Card.Text>{data["Actors"]}</Card.Text>
+            <Card.Text>{data["Type"]}</Card.Text>
+            <Card.Text>{data["Year"]}</Card.Text>
+            <Card.Text>Director: {data["Director"]}</Card.Text>
+            <Card.Text>Writer: {data["Writer"]}</Card.Text>
+            <Card.Text>Duration: {data["Runtime"]}</Card.Text>
+            <Card.Text>Language: {data["Language"]}</Card.Text>
+            <Card.Text> IMDb ratings: {data["imdbRating"]}/10</Card.Text>
+            <Card.Text>Collection: {data["BoxOffice"]}</Card.Text>
           </Card.Body>
         </Card>
         <Card
