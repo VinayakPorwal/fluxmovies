@@ -6,7 +6,7 @@ import Crousel from "./components/crousal";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import FeaturedList from "./featured";
-import FavoriteList from "./favorite";
+// import FavoriteList from "./favorite";
 
 export default function Home(props) {
   const [movies, setMovies] = useState(props.data);
