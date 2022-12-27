@@ -9,7 +9,7 @@ import Placeholder from "react-bootstrap/Placeholder";
 import img from "../../public/thirteen.svg";
 import Image from "next/image";
 import Router, { useRouter } from "next/router";
-import stylis from "../../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 
 function About(props) {
   const [movie, setMovie] = useState(props.s);
@@ -20,10 +20,6 @@ function About(props) {
   const [erorValue, setErorValue] = useState(
     "You might be mistyped Movie name Hence Movie Not Found."
   );
-
-  // const [src, setSrc] = useState(
-  //   "https://m.media-amazon.com/images/M/MV5BOTk3MDNhODEtMWYyMC00NmVjLTg3NzgtNjI1MzA4ZmVhMjE2XkEyXkFqcGdeQXVyNTkzNDQ4ODc@._V1_SX300.jpg"
-  // );
 
   async function api() {
     loading.style.display = "flex";
@@ -125,59 +121,31 @@ function About(props) {
           Search
         </Button>
       </InputGroup>
-      {/* Error box */}
-      <Alert
-        id="Eror"
-        variant="danger"
-        onClose={() => (Eror.style.display = "none")}
-        dismissible
-        style={{
-          width: "75vw",
-          margin: "auto",
-          backgroundColor: "#a9414b",
-          display: "none",
-        }}
-        className="thirteen"
-      >
-        <Alert.Heading>{erorCode}</Alert.Heading>
-        <p>{erorValue}</p>
-      </Alert>
 
       {/* Movie List  */}
-      <div id="displaycard">
+      <div id="displaycard" style={{ height: "80vh", overflow: "scroll" }}>
         {check ? (
           data.slice(0, 6).map((m, i) => (
-            <Card
-              style={{
-                width: "60vw",
-                display: "flex",
-                margin: "Auto",
-                flexDirection: "row",
-              }}
-              key={i}
-              className="displaycard bgBlack"
-            >
-              <div className={stylis.thirteen}>
-                <img
+            <Card key={i} className={` ${styles.displaycard} bgBlack`}>
+              <div className={styles.thirteen}>
+                <Image
                   // If Image component of Nextjs is used
                   // to Understand the concept behind loader function read this Image Optimization article from next js Documentation
                   // https://nextjs.org/docs/basic-features/image-optimization
-                  // loader={({ src }) => {
-                  //   return m.Poster;
-                  // }}
-                  src={m.Poster}
-                  style={{
-                    margin: "Auto",
-                    height: "25vh",
-                    filter: "none",
+                  loader={() => {
+                    return m.Poster;
                   }}
-                  alt=".."
+                  src={m.Poster}
+                  width={120}
+                  height={400}
+                  className={styles.image}
+                  alt={m.Title}
                 />
               </div>
 
               <Card.Body>
-                <Card.Title>{m.Title}</Card.Title>
-                <Card.Text>{m.Type}</Card.Text>
+                <Card.Title className={styles.title}>{m.Title}</Card.Title>
+                <Card.Text className={styles.type}>{m.Type}</Card.Text>
                 <Card.Text>{m.Year}</Card.Text>
                 <Button variant="primary" onClick={() => Router.push(m.imdbID)}>
                   Details
@@ -189,6 +157,7 @@ function About(props) {
           <div>no</div>
         )}
       </div>
+
       {/* loading Skeleton */}
       <Card
         style={{
@@ -221,6 +190,24 @@ function About(props) {
           <Placeholder.Button variant="primary" xs={2} />
         </Card.Body>
       </Card>
+
+      {/* Error box */}
+      <Alert
+        id="Eror"
+        variant="danger"
+        onClose={() => (Eror.style.display = "none")}
+        dismissible
+        style={{
+          width: "75vw",
+          margin: "auto",
+          backgroundColor: "#a9414b",
+          display: "none",
+        }}
+        className="thirteen"
+      >
+        <Alert.Heading>{erorCode}</Alert.Heading>
+        <p>{erorValue}</p>
+      </Alert>
     </>
   );
 }

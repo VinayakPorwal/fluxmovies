@@ -5,109 +5,21 @@ import styles from "../styles/Home.module.css";
 import Crousel from "./components/crousal";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Router from "next/router";
+import FeaturedList from "./featured";
+import FavoriteList from "./favorite";
 
 export default function Home(props) {
   const [movies, setMovies] = useState(props.data);
   const [src, setSrc] = useState(
     "https://m.media-amazon.com/images/M/MV5BOTk3MDNhODEtMWYyMC00NmVjLTg3NzgtNjI1MzA4ZmVhMjE2XkEyXkFqcGdeQXVyNTkzNDQ4ODc@._V1_SX300.jpg"
   );
-  const [featured, setFeatured] = useState([
-    {
-      Title: "3 Idiots",
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BNTkyOGVjMGEtNmQzZi00NzFlLTlhOWQtODYyMDc2ZGJmYzFhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
-      Type: "movie",
-      Year: "2009",
-      imdbID: "tt1187043",
-    },
-    {
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BYmIzYmY4MGItM2I4YS00OWZhLWFmMzQtYzI2MWY1MmM3NGU1XkEyXkFqcGdeQXVyNjQ2MjQ5NzM@._V1_SX300.jpg",
-      Title: "Jab We Met",
-      Type: "movie",
-      Year: "2007",
-      imdbID: "tt1093370",
-    },
-    {
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BOTc3NzAxMjg4M15BMl5BanBnXkFtZTcwMDc2ODQwNw@@._V1_SX300.jpg",
-      Title: "Rockstar",
-      Type: "movie",
-      Year: "2011",
-      imdbID: "tt1839596",
-    },
-    {
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BZWMyYzFjYTYtNTRjYi00OGExLWE2YzgtOGRmYjAxZTU3NzBiXkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_SX300.jpg",
-      Title: "Spider-Man: No Way Home",
-      Type: "movie",
-      Year: "2021",
-      imdbID: "tt10872600",
-    },
-    {
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BMDhhMjBlMWYtMDVlMy00ZjM3LTg3MTUtZDg0NjA0YzcxOGY4XkEyXkFqcGdeQXVyMTE0MzY0NjE1._V1_SX300.jpg",
-      Title: "777 Charlie",
-      Type: "movie",
-      Year: "2022",
-      imdbID: "tt7466810",
-    },
-    {
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BYmZhNjhkN2UtN2I3NS00MzUyLTg3M2YtNjRjN2Y2NmNhNzUxXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg",
-      Title: "Ajab Prem Ki Ghazab Kahani",
-      Type: "movie",
-      Year: "2009",
-      imdbID: "tt1252596",
-    },
-    {
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BN2RjZDJhYzUtOTQ5Yy00OWM3LWE5OTctM2Y0YWVmNzAzODllXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_SX300.jpg",
-      Title: "Sita Ramam",
-      Type: "movie",
-      Year: "2022",
-      imdbID: "tt20850406",
-    },
-    {
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BNzU3YjM0YWItZjFjMS00MDRhLWI5OWMtNDA1ZTI5YWRlYjljXkEyXkFqcGdeQXVyMTIyNzY0NTMx._V1_SX300.jpg",
-      Title: "TVF Pitchers",
-      Type: "series",
-      Year: "2015–2022",
-      imdbID: "tt4742876",
-    },
-    {
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BZDkxODJmNDktZDcxMy00MGJkLWI3NzEtNzVkYTdkZWI0ZmVkXkEyXkFqcGdeQXVyNDY4NjAxNTc@._V1_SX300.jpg",
-      Title: "Panchayat",
-      Type: "series",
-      Year: "2020–",
-      imdbID: "tt12004706",
-    },
-    {
-      Poster:
-        "https://m.media-amazon.com/images/M/MV5BMTNkNmVmOTItNzlmNi00MjE5LWE2YzEtNzBlOTNiNmE0OTUzXkEyXkFqcGdeQXVyNDY5MTUyNjU@._V1_SX300.jpg",
-      Title: "Ra.One",
-      Type: "movie",
-      Year: "2011",
-      imdbID: "tt1562871",
-    },
-  ]);
   const [favoriteData, setFavoriteData] = useState([]);
   const [check, setCheck] = useState(false);
 
-  if (typeof window !== "undefined") {
-    console.log("we are running on the client");
-  } else {
-    console.log("we are running on the server");
-  }
   const favdata = () => {
     var getdata = JSON.parse(localStorage.getItem("favs"));
 
-    // var item = (DynamicData.innerHTML = item);
     if (getdata) {
-      // getdata = [];
       setFavoriteData(getdata);
       console.log(favoriteData);
       DynamicFavData.style.display = "block";
@@ -117,20 +29,9 @@ export default function Home(props) {
         .scrollIntoView({ behavior: "smooth" });
     }
   };
-  // useEffect(() => {
-  //   // console.log(JSON.parse(localStorage.getItem("favs")));
-  //   // setFavorites(JSON.parse(localStorage.getItem("favs")));
-  //   var favorite = JSON.parse(localStorage.getItem("favs"));
-  //   console.log(favorite);
-  // }, []);
-  function xx() {
-    return favoriteData.map((obj) => {
-      <Card.Title key={obj.id}>
-        {obj.title}
-        {obj.imdb}
-      </Card.Title>;
-    });
-  }
+  useEffect(() => {
+    // favdata();
+  }, []);
 
   return (
     <>
@@ -140,7 +41,7 @@ export default function Home(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.mmain}>
+      <main className={styles.main}>
         <p className={styles.cardp}></p>
         <p className={styles.cardp}></p>
 
@@ -170,116 +71,9 @@ export default function Home(props) {
         </p>
       </main>
       {/* <Crousel src={src} movies={featured} /> */}
-
-      <Card.Header
-        as="h5"
-        style={{ width: "80vw", alignItems: "center", margin: "1rem auto" }}
-      >
-        Featured
-      </Card.Header>
-      <Card
-        className={`${styles.thirteen} bgBlack mb-3`}
-        style={{ width: "80vw", alignItems: "center", margin: "auto" }}
-      >
-        <div
-          className={`${styles.grid} ${styles.scrolbar}`}
-          style={{
-            overflowX: "scroll",
-            width: "fit-content",
-            display: "flex",
-          }}
-        >
-          {featured.map((m, i) => (
-            <Card.Body style={{ textAlign: "center" }} key={i}>
-              <img
-                src={m.Poster}
-                alt="movie"
-                style={{
-                  height: "25vh",
-                  filter: "none",
-                  cursor: "pointer",
-                  marginBottom: "2px",
-                }}
-              />
-              <Card.Title className={styles.movieName}>{m.Title}</Card.Title>
-              <Card.Text className={styles.type}>{m.Type}</Card.Text>
-              {/* <Card.Text>{m.Year}</Card.Text> */}
-              <Button
-                variant="primary"
-                onClick={() => Router.push("movie/" + m.imdbID)}
-              >
-                Details
-              </Button>
-            </Card.Body>
-          ))}
-        </div>
-      </Card>
-
-      {/* Favorites */}
-      <div id="DynamicFavData" style={{ display: "none" }}>
-        <Card.Header
-          as="h5"
-          style={{ width: "80vw", alignItems: "center", margin: "1rem auto" }}
-          id="scrolltofav"
-        >
-          {favoriteData.length} Favorites
-        </Card.Header>
-
-        <Card
-          className={`${styles.thirteen} bgBlack mb-3`}
-          id="favorites"
-          style={{ width: "80vw", alignItems: "center", margin: "auto" }}
-        >
-          <div
-            className={`${styles.grid} ${styles.scrolbar}`}
-            style={{
-              overflowX: "scroll",
-              width: "fit-content",
-              display: "flex",
-            }}
-          >
-            {check &&
-              favoriteData.map((obj) => (
-                <Card.Body style={{ textAlign: "center" }} key={obj.imdb}>
-                  <img
-                    src={obj.poster}
-                    alt="movie"
-                    style={{
-                      height: "25vh",
-                      filter: "none",
-                      cursor: "pointer",
-                      marginBottom: "2px",
-                    }}
-                    onClick={() => Router.push("movie/" + obj.imdb)}
-                  />
-                  <Card.Title className={styles.movieName}>
-                    {obj.title}
-                  </Card.Title>
-                  {/* <Card.Text>{m.Year}</Card.Text> */}
-                  <Button
-                    variant="secondary"
-                    onClick={() => {
-                      var objId = obj.imdb;
-                      const removeItem = favoriteData.filter((data) => {
-                        return data.imdb !== objId;
-                      });
-                      setFavoriteData(removeItem);
-                      console.log("remove", removeItem);
-                      localStorage.setItem("favs", JSON.stringify(removeItem));
-                      console.log(
-                        "update",
-                        JSON.parse(localStorage.getItem("favs"))
-                      );
-                    }}
-                  >
-                    Remove
-                  </Button>
-                </Card.Body>
-              ))}
-          </div>
-        </Card>
-      </div>
-
+      <FeaturedList />
+      <FavoriteList check={check} favoriteData={favoriteData} />
+      {/* Footer */}
       <Card
         className={` ${styles.center} text-center`}
         style={{
@@ -321,3 +115,5 @@ export async function getServerSideProps(context) {
     props: { data }, // will be passed to the page component as props
   };
 }
+
+//https://cdn.ggcc8.com//movies/disk3/disk3_2/Zakir%20Khan-%20Tathastu.mp4
