@@ -17,8 +17,9 @@ export default function App({ Component, pageProps }) {
   </Head>;
   return (
     <>
-      <NavigateBar />
-      <Component {...pageProps} />
+      <NavigateBar>
+        <Component {...pageProps} />
+      </NavigateBar>
     </>
   );
 }

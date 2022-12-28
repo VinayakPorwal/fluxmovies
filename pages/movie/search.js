@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Head from "next/head";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -10,9 +10,12 @@ import img from "../../public/thirteen.svg";
 import Image from "next/image";
 import Router, { useRouter } from "next/router";
 import styles from "../../styles/Home.module.css";
+import { UserContext } from "../components/navbar";
 
 function About(props) {
-  const [movie, setMovie] = useState(props.s);
+  const { movie } = React.useContext(UserContext);
+
+  // const [movieName, setMovieName] = useState(props.s);
   const key = "2d4765cd";
   const [data, setData] = useState([]);
   const [check, setCheck] = useState(false);
@@ -21,6 +24,23 @@ function About(props) {
     "You might be mistyped Movie name Hence Movie Not Found."
   );
 
+  useEffect(() => {
+    if (
+      typeof movie === "undefined" ||
+      (typeof movie === "string" && movie.trim().length === 0)
+    ) {
+      setErorValue(
+        "Invalid combination of letters Searched , Such as Empty characters!."
+      );
+      setErorCode("Error 422 ! Unsupported Entry");
+      Eror.style.display = "block";
+    } else {
+      api();
+    }
+    // setMovieName(movie);
+    console.log("name:", movie);
+    // return;
+  }, [movie]);
   async function api() {
     loading.style.display = "flex";
     displaycard.style.display = "None";
@@ -53,48 +73,6 @@ function About(props) {
       });
   }
 
-  function handleMovieChange(e) {
-    setMovie(e.target.value);
-  }
-
-  function onpress() {
-    if (
-      typeof movie === "undefined" ||
-      (typeof movie === "string" && movie.trim().length === 0)
-    ) {
-      setErorValue(
-        "Invalid combination of letters Searched , Such as Empty characters!."
-      );
-      setErorCode("Error 422 ! Unsupported Entry");
-      Eror.style.display = "block";
-    } else {
-      api();
-    }
-  }
-  function keyPress(e) {
-    if (e.keyCode === 13) {
-      // console.log("value", e.target.value);
-      if (
-        typeof movie === "undefined" ||
-        (typeof movie === "string" && movie.trim().length === 0)
-      ) {
-        setErorValue(
-          "Invalid combination of letters Searched , Such as Empty characters!."
-        );
-        setErorCode("Error 422 ! Unsupported Entry");
-        Eror.style.display = "block";
-      } else {
-        api();
-      }
-      e.preventDefault();
-    }
-  }
-
-  useEffect(() => {
-    api();
-    return;
-  }, []);
-
   return (
     <>
       <Head>
@@ -103,42 +81,26 @@ function About(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="../favicon.ico" />
       </Head>
-      {/* <InputGroup className="mb-3 mx-auto" style={{ width: "80vw" }}> */}
-      {/* <Form.Control
-          aria-label="Recipient's username"
-          aria-describedby="basic-addon2"
-          placeholder="Search your Movie By Name"
-          value={movie}
-          onChange={handleMovieChange}
-          onKeyDown={keyPress}
-          className="bgBlack"
-        />
-        <Button
-          variant="outline-secondary"
-          id="button-addon2"
-          onClick={onpress}
-        >
-          Search
-        </Button> */}
-      {/* </InputGroup> */}
-      <Form className="d-flex">
-        <Form.Control
-          type="search"
-          placeholder="Search"
-          value={movie}
-          onChange={handleMovieChange}
-          onKeyDown={keyPress}
-          className="me-2 bgBlack fontWhite"
-          aria-label="Search"
-        />
-        <Button variant="outline-dark" onClick={onpress}>
-          Search
-        </Button>
-      </Form>
-
+      {/* Error box */}
+      <Alert
+        id="Eror"
+        variant="danger"
+        onClose={() => (Eror.style.display = "none")}
+        dismissible
+        style={{
+          width: "75vw",
+          margin: "auto",
+          backgroundColor: "#a9414b",
+          display: "none",
+        }}
+        className="thirteen"
+      >
+        <Alert.Heading>{erorCode}</Alert.Heading>
+        <p>{erorValue}</p>
+      </Alert>
       {/* Movie List  */}
       <div id="displaycard" style={{ height: "80vh", overflow: "scroll" }}>
-        {check ? (
+        {check &&
           data.slice(0, 6).map((m, i) => (
             <Card key={i} className={` ${styles.displaycard} bgBlack`}>
               <div className={styles.thirteen}>
@@ -166,10 +128,7 @@ function About(props) {
                 </Button>
               </Card.Body>
             </Card>
-          ))
-        ) : (
-          <div>no</div>
-        )}
+          ))}
       </div>
 
       {/* loading Skeleton */}
@@ -204,31 +163,13 @@ function About(props) {
           <Placeholder.Button variant="primary" xs={2} />
         </Card.Body>
       </Card>
-
-      {/* Error box */}
-      <Alert
-        id="Eror"
-        variant="danger"
-        onClose={() => (Eror.style.display = "none")}
-        dismissible
-        style={{
-          width: "75vw",
-          margin: "auto",
-          backgroundColor: "#a9414b",
-          display: "none",
-        }}
-        className="thirteen"
-      >
-        <Alert.Heading>{erorCode}</Alert.Heading>
-        <p>{erorValue}</p>
-      </Alert>
     </>
   );
 }
 
 export async function getServerSideProps(context) {
   var s = context.query.s;
-  console.log(context);
+  // console.log(context);
   if (typeof s === "undefined") {
     s = "Bollywood";
   }
@@ -237,3 +178,7 @@ export async function getServerSideProps(context) {
   };
 }
 export default About;
+
+//Pagination
+//N/A image add
+//Navbar Responsive
