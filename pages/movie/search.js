@@ -103,8 +103,8 @@ function About(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="../favicon.ico" />
       </Head>
-      <InputGroup className="mb-3 mx-auto" style={{ width: "80vw" }}>
-        <Form.Control
+      {/* <InputGroup className="mb-3 mx-auto" style={{ width: "80vw" }}> */}
+      {/* <Form.Control
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
           placeholder="Search your Movie By Name"
@@ -119,8 +119,22 @@ function About(props) {
           onClick={onpress}
         >
           Search
+        </Button> */}
+      {/* </InputGroup> */}
+      <Form className="d-flex">
+        <Form.Control
+          type="search"
+          placeholder="Search"
+          value={movie}
+          onChange={handleMovieChange}
+          onKeyDown={keyPress}
+          className="me-2 bgBlack fontWhite"
+          aria-label="Search"
+        />
+        <Button variant="outline-dark" onClick={onpress}>
+          Search
         </Button>
-      </InputGroup>
+      </Form>
 
       {/* Movie List  */}
       <div id="displaycard" style={{ height: "80vh", overflow: "scroll" }}>
@@ -214,7 +228,7 @@ function About(props) {
 
 export async function getServerSideProps(context) {
   var s = context.query.s;
-
+  console.log(context);
   if (typeof s === "undefined") {
     s = "Bollywood";
   }

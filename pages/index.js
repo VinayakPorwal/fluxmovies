@@ -6,7 +6,7 @@ import Crousel from "./components/crousal";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import FeaturedList from "./featured";
-// import FavoriteList from "./favorite";
+import FavoriteList from "./favorite";
 
 export default function Home(props) {
   const [movies, setMovies] = useState(props.data);
@@ -20,6 +20,8 @@ export default function Home(props) {
     var getdata = JSON.parse(localStorage.getItem("favs"));
 
     if (getdata) {
+      if (getdata.length < 1) return;
+
       setFavoriteData(getdata);
       console.log(favoriteData);
       DynamicFavData.style.display = "block";
@@ -29,9 +31,9 @@ export default function Home(props) {
         .scrollIntoView({ behavior: "smooth" });
     }
   };
-  // useEffect(() => {
-  //   // favdata();
-  // }, []);
+  useEffect(() => {
+    favdata();
+  }, []);
   const remove = (obj) => {
     var objId = obj.imdb;
     const removeItem = favoriteData.filter((data) => {
@@ -83,9 +85,9 @@ export default function Home(props) {
       {/* <Crousel src={src} movies={featured} /> */}
       <FeaturedList />
 
-      {/* <FavoriteList check={check} favoriteData={favoriteData} /> */}
+      <FavoriteList check={check} favoriteData={favoriteData} />
       {/* Favorites */}
-      <div id="DynamicFavData" style={{ display: "none" }}>
+      {/* <div id="DynamicFavData" style={{ display: "none" }}>
         <Card.Header
           as="h5"
           style={{ width: "80vw", alignItems: "center", margin: "1rem auto" }}
@@ -125,7 +127,6 @@ export default function Home(props) {
                   <Card.Title className={styles.movieName}>
                     {obj.title}
                   </Card.Title>
-                  {/* <Card.Text>{m.Year}</Card.Text> */}
                   <Button variant="secondary" onClick={() => remove(obj)}>
                     Remove
                   </Button>
@@ -133,7 +134,7 @@ export default function Home(props) {
               ))}
           </div>
         </Card>
-      </div>
+      </div> */}
       {/* Footer */}
       <Card
         className={` ${styles.center} text-center`}
@@ -147,8 +148,7 @@ export default function Home(props) {
         <Card.Body>
           <Card.Title>Thanks for Visiting!</Card.Title>
           <Card.Text>
-            If you found any bug or error,Kindly share with Developer via given
-            Link.
+            If you found any bug or error,Kindly share on Github with Developer.
           </Card.Text>
           <Button variant="info">Review</Button>
         </Card.Body>
