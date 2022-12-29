@@ -94,7 +94,7 @@ function NavigateBar(props) {
         <Navbar
           key={expand}
           expand={expand}
-          className={`bgBlack fontWhite ${styles.navbarOnMob}`}
+          className={`bgBlack fontWhite`}
           style={{
             position: "sticky",
             top: "0",
@@ -104,10 +104,21 @@ function NavigateBar(props) {
         >
           <Container
             fluid
-            className="fontWhite"
-            style={{ width: "80vw", height: "15vh", flexWrap: "wrap" }}
+            className={`fontWhite  ${styles.navbarOnMob}`}
+            style={{ width: "80vw", height: "15vh" }}
           >
-            <Navbar.Brand href="#">FluX Movies</Navbar.Brand>
+            <Navbar.Brand
+              href="#"
+              onClick={() => Router.push("/")}
+              style={{
+                fontSize: "x-large",
+                fontWeight: "bold",
+                textShadow: "-2px 2px 4px #00d4ff",
+                fontVariant: "petite-caps",
+              }}
+            >
+              FluX Movies
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
@@ -131,7 +142,7 @@ function NavigateBar(props) {
                     Movies
                   </Nav.Link>
                 </Nav>
-                <Form className={`d-flex ${styles.bigScreen}`}>
+                <Form className={`${styles.bigScreen}`}>
                   <Form.Control
                     type="search"
                     placeholder="Search"
@@ -150,7 +161,7 @@ function NavigateBar(props) {
           </Container>
         </Navbar>
         <Form
-          className={`d-flex ${styles.mobileviewflex}`}
+          className={`${styles.mobileviewflex}`}
           style={{ maxWidth: "85vw", margin: "auto" }}
         >
           <Form.Control

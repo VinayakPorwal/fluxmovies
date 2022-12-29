@@ -90,7 +90,9 @@ function About(props) {
         style={{
           width: "75vw",
           margin: "auto",
-          backgroundColor: "#a9414b",
+          backgroundColor: "transparent",
+          top: "2rem",
+          border: "none",
           display: "none",
         }}
         className="thirteen"
@@ -102,7 +104,13 @@ function About(props) {
       <div id="displaycard" style={{ height: "80vh", overflow: "scroll" }}>
         {check &&
           data.slice(0, 6).map((m, i) => (
-            <Card key={i} className={` ${styles.displaycard} bgBlack`}>
+            <Card
+              key={i}
+              className={` ${styles.displaycard} bgBlack`}
+              style={{
+                justifyContent: "start",
+              }}
+            >
               <div className={styles.thirteen}>
                 <Image
                   // If Image component of Nextjs is used

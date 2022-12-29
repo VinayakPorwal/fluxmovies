@@ -129,16 +129,16 @@ a {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #000;
+  background: transparent;
   /* change this to white or #111 to see the sideScrollBar*/
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #000;
+  background: transparent;
 }

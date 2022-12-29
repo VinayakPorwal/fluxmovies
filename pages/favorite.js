@@ -52,12 +52,17 @@ function FavoriteList(props) {
         {check && favoriteData.length} Favorites
       </Card.Header>
       <Card
-        className={`${styles.thirteen} bgBlack mb-3`}
+        className={`${styles.thirteen} ${styles.widthChange} bgBlack mb-3`}
         id="favorites"
-        style={{ width: "80vw", alignItems: "center", margin: "auto" }}
+        style={{
+          width: "80vw",
+          alignItems: "center",
+          margin: "auto",
+          padding: "10px 0 0 0",
+        }}
       >
         <div
-          className={`${styles.grid} ${styles.scrolbar}`}
+          className={`${styles.grid} ${styles.scrolbar} `}
           style={{
             overflowX: "scroll",
             width: "fit-content",
@@ -74,7 +79,7 @@ function FavoriteList(props) {
                   }}
                   src={obj.poster}
                   priority
-                  //   src={src}
+                  // src={img}
                   width={120}
                   height={400}
                   className={styles.image}

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Router from "next/router";
+
 function FeaturedList() {
   const [featured, setFeatured] = useState([
     {
@@ -87,6 +88,17 @@ function FeaturedList() {
       imdbID: "tt1562871",
     },
   ]);
+  const barRef = useRef(null);
+  const scrollInterval = useRef(null);
+  useEffect(() => {
+    function scroll() {
+      barRef.current.scrollLeft += 1;
+    }
+
+    scrollInterval.current = setInterval(scroll, 20);
+
+    return () => clearInterval(scrollInterval.current);
+  }, []);
 
   return (
     <div>
@@ -97,8 +109,13 @@ function FeaturedList() {
         Featured
       </Card.Header>
       <Card
-        className={`${styles.thirteen} bgBlack mb-3`}
-        style={{ width: "80vw", alignItems: "center", margin: "auto" }}
+        className={`${styles.thirteen} ${styles.widthChange} bgBlack mb-3`}
+        style={{
+          width: "80vw",
+          alignItems: "center",
+          margin: "auto",
+          padding: "10px 0 0 0",
+        }}
       >
         <div
           className={`${styles.grid} ${styles.scrolbar}`}
@@ -107,6 +124,7 @@ function FeaturedList() {
             width: "fit-content",
             display: "flex",
           }}
+          ref={barRef}
         >
           {featured.map((m, i) => (
             <Card.Body style={{ textAlign: "center" }} key={i}>
@@ -119,17 +137,18 @@ function FeaturedList() {
                 priority
                 width={120}
                 height={400}
+                onClick={() => Router.push("movie/" + m.imdbID)}
                 className={styles.image}
               />
               <Card.Title className={styles.movieName}>{m.Title}</Card.Title>
               <Card.Text className={styles.type}>{m.Type}</Card.Text>
               {/* <Card.Text>{m.Year}</Card.Text> */}
-              <Button
+              {/* <Button
                 variant="primary"
                 onClick={() => Router.push("movie/" + m.imdbID)}
               >
                 Details
-              </Button>
+              </Button> */}
             </Card.Body>
           ))}
         </div>

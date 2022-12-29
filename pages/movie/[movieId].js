@@ -12,6 +12,46 @@ function Movies(props) {
   const src = props.data["Poster"];
   const [variant, setVariant] = useState("primary");
   const [value, setValue] = useState("Add to fav");
+
+  function Add(data) {
+    var imbdid = data["imdbID"];
+    var valueid = data["Title"];
+    var posterurl = data["Poster"];
+    var favs = JSON.parse(localStorage.getItem("favs"));
+
+    if (favs) {
+      var newArr = favs.filter((data) => {
+        return data.imdb !== imbdid;
+      });
+      // console.log(favs, newArr);
+      if (favs.length !== newArr.length) {
+        setValue("Already Exists");
+        return;
+      } else {
+        favs.push({
+          title: valueid,
+          imdb: imbdid,
+          poster: posterurl,
+        });
+
+        localStorage.setItem("favs", JSON.stringify(favs));
+        setValue("Added");
+        setVariant("success");
+      }
+      // favs[keyid] = valueid;
+    } else {
+      favs = [];
+      favs.push({
+        title: valueid,
+        imdb: imbdid,
+        poster: posterurl,
+      });
+      localStorage.setItem("favs", JSON.stringify(favs));
+      console.log("Key not found");
+      setValue("Added");
+      setVariant("success");
+    }
+  }
   return (
     <>
       <Head>
@@ -56,45 +96,7 @@ function Movies(props) {
             <Button
               style={{ margin: "10px 2px" }}
               variant={variant}
-              onClick={() => {
-                var imbdid = data["imdbID"];
-                var valueid = data["Title"];
-                var posterurl = data["Poster"];
-                var favs = JSON.parse(localStorage.getItem("favs"));
-
-                if (favs) {
-                  var newArr = favs.filter((data) => {
-                    return data.imdb !== imbdid;
-                  });
-                  // console.log(favs, newArr);
-                  if (favs.length !== newArr.length) {
-                    setValue("Already Exists");
-                    return;
-                  } else {
-                    favs.push({
-                      title: valueid,
-                      imdb: imbdid,
-                      poster: posterurl,
-                    });
-
-                    localStorage.setItem("favs", JSON.stringify(favs));
-                    setValue("Added");
-                    setVariant("success");
-                  }
-                  // favs[keyid] = valueid;
-                } else {
-                  favs = [];
-                  favs.push({
-                    title: valueid,
-                    imdb: imbdid,
-                    poster: posterurl,
-                  });
-                  localStorage.setItem("favs", JSON.stringify(favs));
-                  console.log("Key not found");
-                  setValue("Added");
-                  setVariant("success");
-                }
-              }}
+              onClick={() => Add(data)}
             >
               {value}
             </Button>

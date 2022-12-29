@@ -47,6 +47,23 @@
 // }
 
 // export default Crousel;
+// export async function getServerSideProps(context) {
+//   const movieName = "dhoom";
+//   const key = "2d4765cd";
+//   const res = await fetch(
+//     `http://www.omdbapi.com/?apikey=${key}&s=${movieName}`,
+//     {
+//       mode: "no-cors",
+//     }
+//   );
+//   var data = await res.json();
+//   data = data["Search"];
+
+//   return {
+//     props: { data }, // will be passed to the page component as props
+//   };
+// }
+
 function Crousel() {
   return <div>Enter</div>;
 }
