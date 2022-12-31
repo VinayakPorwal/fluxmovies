@@ -26,5 +26,6 @@ This is Next js created app Styled with Bootsttrap
 
 #Vercel and Netlify like platforms to deploy it.
 
-vercel App : https://fluxmovies.vercel.app
-netlify App : https://fluxmovies.netlify.app
+>vercel App : https://fluxmovies.vercel.app
+
+>netlify App : https://fluxmovies.netlify.app
