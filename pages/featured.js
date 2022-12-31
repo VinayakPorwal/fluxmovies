@@ -90,11 +90,11 @@ function FeaturedList() {
   ]);
   const barRef = useRef(null);
   const scrollInterval = useRef(null);
+  function scroll() {
+    barRef.current.scrollLeft += 1;
+  }
   useEffect(() => {
-    function scroll() {
-      barRef.current.scrollLeft += 1;
-    }
-
+    scroll();
     scrollInterval.current = setInterval(scroll, 20);
 
     return () => clearInterval(scrollInterval.current);

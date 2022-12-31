@@ -73,6 +73,9 @@
     --card-border-rgb: 200, 200, 200;
   }
 }
+a {
+  background-color: black !important;
+}
 
 * {
   box-sizing: border-box;

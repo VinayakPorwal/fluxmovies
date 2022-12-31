@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import Form from "react-bootstrap/Form";
+import Router, { useRouter } from "next/router";
+import Image from "next/image";
 import Head from "next/head";
-import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
 import Placeholder from "react-bootstrap/Placeholder";
+import Pagination from "react-bootstrap/Pagination";
 import img from "../../public/thirteen.svg";
-import Image from "next/image";
-import Router, { useRouter } from "next/router";
 import styles from "../../styles/Home.module.css";
 import { UserContext } from "../components/navbar";
 
@@ -19,6 +18,9 @@ function About(props) {
   const key = "2d4765cd";
   const [data, setData] = useState([]);
   const [check, setCheck] = useState(false);
+  const [pageNum, setPageNum] = useState(1);
+  const [totalPages, setTotalPages] = useState();
+
   const [erorCode, setErorCode] = useState("");
   const [erorValue, setErorValue] = useState(
     "You might be mistyped Movie name Hence Movie Not Found."
@@ -29,10 +31,8 @@ function About(props) {
       typeof movie === "undefined" ||
       (typeof movie === "string" && movie.trim().length === 0)
     ) {
-      setErorValue(
-        "Invalid combination of letters Searched , Such as Empty characters!."
-      );
-      setErorCode("Error 422 ! Unsupported Entry");
+      setErorValue("Unsupported Entry , Such as Empty characters!.");
+      setErorCode("Error 422 ! Empty Search Box ");
       Eror.style.display = "block";
     } else {
       api();
@@ -41,6 +41,7 @@ function About(props) {
     console.log("name:", movie);
     // return;
   }, [movie]);
+
   async function api() {
     loading.style.display = "flex";
     displaycard.style.display = "None";
@@ -63,10 +64,49 @@ function About(props) {
           );
           setData([]);
         } else {
+          Eror.style.display = "none";
           displaycard.style.display = "block";
           setCheck(true);
           setData(d["Search"]);
+          setTotalPages(d["totalResults"]);
 
+          // console.log(d);
+        }
+        loading.style.display = "None";
+      });
+  }
+
+  const items = [];
+
+  for (
+    let number = 1;
+    number <= (totalPages - (totalPages % 10)) / 10;
+    number++
+  ) {
+    items.push(number);
+  }
+  async function page(i) {
+    loading.style.display = "flex";
+    displaycard.style.display = "None";
+    console.log(movie);
+    Eror.style.display = "none";
+
+    await fetch(`https://www.omdbapi.com/?apikey=${key}&s=${movie}&page=${i}`, {
+      // mode: "no-cors",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    })
+      .then((response) => response.json())
+      .then((d) => {
+        // console.log(d);
+        if (d["Response"] == "False") {
+          setData([]);
+        } else {
+          Eror.style.display = "none";
+          displaycard.style.display = "block";
+          setCheck(true);
+          setPageNum(i);
+          setData(d["Search"]);
           // console.log(d);
         }
         loading.style.display = "None";
@@ -81,6 +121,7 @@ function About(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="../favicon.ico" />
       </Head>
+
       {/* Error box */}
       <Alert
         id="Eror"
@@ -100,10 +141,11 @@ function About(props) {
         <Alert.Heading>{erorCode}</Alert.Heading>
         <p>{erorValue}</p>
       </Alert>
+
       {/* Movie List  */}
       <div id="displaycard" style={{ height: "80vh", overflow: "scroll" }}>
         {check &&
-          data.slice(0, 6).map((m, i) => (
+          data.slice(0, 9).map((m, i) => (
             <Card
               key={i}
               className={` ${styles.displaycard} bgBlack`}
@@ -171,6 +213,43 @@ function About(props) {
           <Placeholder.Button variant="primary" xs={2} />
         </Card.Body>
       </Card>
+
+      {/* Pagination */}
+      <Pagination style={{ width: "fit-content", margin: "auto" }}>
+        <Pagination.Prev
+          className="bgBlack"
+          onClick={() => {
+            if (pageNum > 1) page(pageNum - 1);
+          }}
+        />
+        <div
+          style={{
+            margin: "auto",
+            overflow: "scroll",
+            width: "80vw",
+            display: "flex",
+          }}
+        >
+          {items.map((data, number) => (
+            <Pagination.Item
+              key={number + 1}
+              active={number + 1 === pageNum}
+              className="bgBlack"
+              size="sm"
+              variant="secondary"
+              onClick={() => page(number + 1)}
+            >
+              {number + 1}
+            </Pagination.Item>
+          ))}
+        </div>
+        <Pagination.Next
+          onClick={() => {
+            if (pageNum < totalPages - (totalPages % 10) / 10)
+              page(pageNum + 1);
+          }}
+        />
+      </Pagination>
     </>
   );
 }
@@ -189,4 +268,3 @@ export default About;
 
 //Pagination
 //N/A image add
-//Navbar Responsive

@@ -32,10 +32,8 @@ function NavigateBar(props) {
         typeof movie === "undefined" ||
         (typeof movie === "string" && movie.trim().length === 0)
       ) {
-        setErorValue(
-          "Invalid combination of letters Searched , Such as Empty characters!."
-        );
-        setErorCode("Error 422 ! Unsupported Entry");
+        setErorValue("Unsupported Entry , Such as Empty characters!.");
+        setErorCode("Error 422 ! Empty Search Box ");
         setShow(true);
       } else {
         Router.push(`/movie/search?s=` + movie);
@@ -49,10 +47,8 @@ function NavigateBar(props) {
       typeof movie === "undefined" ||
       (typeof movie === "string" && movie.trim().length === 0)
     ) {
-      setErorValue(
-        "Invalid combination of letters Searched , Such as Empty characters!."
-      );
-      setErorCode("Error 422 ! Unsupported Entry");
+      setErorValue("Unsupported Entry , Such as Empty characters!.");
+      setErorCode("Error 422 ! Empty Search Box ");
       setShow(true);
     } else {
       Router.push(`/movie/search?s=` + movie);
@@ -73,6 +69,7 @@ function NavigateBar(props) {
             left: "2rem",
             border: "1px solid white",
             borderRadius: "5px",
+            maxWidth: "80vw",
           }}
           autohide
         >
@@ -132,7 +129,13 @@ function NavigateBar(props) {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3 fontWhite">
-                  <Nav.Link href="#" onClick={() => Router.push("/")}>
+                  <Nav.Link
+                    href="#"
+                    onClick={() => {
+                      setMovie("");
+                      Router.push("/");
+                    }}
+                  >
                     Home
                   </Nav.Link>
                   <Nav.Link

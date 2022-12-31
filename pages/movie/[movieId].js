@@ -102,15 +102,21 @@ function Movies(props) {
             </Button>
 
             <Card.Title>{data["Title"]}</Card.Title>
+            <Card.Text style={{ margin: "0px", opacity: "0.6" }}>
+              {data["Type"]}
+            </Card.Text>
             <Card.Text>{data["Actors"]}</Card.Text>
-            <Card.Text>{data["Type"]}</Card.Text>
+            <Card.Text>Genre: {data["Genre"]}</Card.Text>
             <Card.Text>{data["Year"]}</Card.Text>
             <Card.Text>Director: {data["Director"]}</Card.Text>
             <Card.Text>Writer: {data["Writer"]}</Card.Text>
             <Card.Text>Duration: {data["Runtime"]}</Card.Text>
             <Card.Text>Language: {data["Language"]}</Card.Text>
-            <Card.Text> IMDb ratings: {data["imdbRating"]}/10</Card.Text>
-            <Card.Text>Collection: {data["BoxOffice"]}</Card.Text>
+            <Card.Text className={styles.imbd}>
+              {" "}
+              IMDb : {data["imdbRating"]}/10
+            </Card.Text>
+            <Card.Text>BoxOffice: {data["BoxOffice"]}</Card.Text>
           </Card.Body>
         </Card>
         <Card
