@@ -63,6 +63,7 @@ function About(props) {
             "You might be mistyped Movie name Hence Movie Not Found."
           );
           setData([]);
+          setTotalPages();
         } else {
           Eror.style.display = "none";
           displaycard.style.display = "block";
@@ -143,6 +144,11 @@ function About(props) {
       </Alert>
 
       {/* Movie List  */}
+      {totalPages && (
+        <h4 style={{ margin: "auto", textAlign: "center" }}>
+          {totalPages} Results Found
+        </h4>
+      )}
       <div id="displaycard" style={{ height: "80vh", overflow: "scroll" }}>
         {check &&
           data.slice(0, 9).map((m, i) => (
@@ -226,7 +232,7 @@ function About(props) {
           style={{
             margin: "auto",
             overflow: "scroll",
-            width: "80vw",
+            maxWidth: "80vw",
             display: "flex",
           }}
         >
