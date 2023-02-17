@@ -1,6 +1,9 @@
 This is Next js created app Styled with Bootsttrap
-# This is an Movie review project inspired by IMDb ratings site , I tried to clone it using OMDb api for movie data and Used
-# Added features :
+### This is an Movie review project inspired by IMDb ratings site.
+
+### I tried to clone it using OMDb api for movies data
+
+### Added features :
 >Realtime Search
 
 >Responsive
